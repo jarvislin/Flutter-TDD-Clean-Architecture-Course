@@ -16,7 +16,9 @@ import 'features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 final inject = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - Number Trivia
+  /**
+   * ! Features - Number Trivia
+   */
   // Bloc
   inject.registerFactory(
     () => NumberTriviaBloc(
@@ -48,11 +50,16 @@ Future<void> init() async {
     () => NumberTriviaLocalDataSourceImpl(sharedPreferences: inject()),
   );
 
-  //! Core
+  /**
+   * ! Core
+   */
+  //!
   inject.registerLazySingleton(() => InputConverter());
   inject.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(inject()));
 
-  //! External
+  /**
+   * ! External
+   */
   final sharedPreferences = await SharedPreferences.getInstance();
   inject.registerLazySingleton(() => sharedPreferences);
   inject.registerLazySingleton(() => http.Client());
