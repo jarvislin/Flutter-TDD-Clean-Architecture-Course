@@ -2,7 +2,7 @@ on: push
 name: Run Tests
 jobs:
   build:
-    name: Test
+    name: Test, Analyze
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -13,5 +13,11 @@ jobs:
       with:
         flutter-version: '2.2.3'
     - run: flutter pub get
-    - run: flutter test
-
+    - name: Analyze
+    - run: flutter analyze
+    - name: Run tests
+    - run: flutter test --coverage
+    - name: Upload coverage to codecov
+      run: curl -s https://codecov.io/bash -t ${{ secrets.SECRET_KEY }}
+      shell: bash
+    
