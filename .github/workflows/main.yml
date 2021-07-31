@@ -14,8 +14,7 @@ jobs:
     - name: Use flutter action
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '2.2.3'
-     
+        flutter-version: '2.2.3' 
     - name: pub get
       run: flutter pub get
     - name: analyze
