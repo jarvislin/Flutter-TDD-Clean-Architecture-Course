@@ -1,5 +1,5 @@
 name: Flutter tests
-on: pushs
+on: push
 jobs:
   build:
     name: Test, Analyze
