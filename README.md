@@ -1,6 +1,9 @@
+[![codecov](https://codecov.io/gh/jarvislin/Flutter-TDD-Clean-Architecture-Course/branch/master/graph/badge.svg?token=YZ65J4YXDM)](https://codecov.io/gh/jarvislin/Flutter-TDD-Clean-Architecture-Course)
+
 # number_trivia
 
-A new Flutter application.
+A Flutter application for learning online course from:
+https://resocoder.com/flutter-clean-architecture-tdd/
 
 ## Getting Started
 
