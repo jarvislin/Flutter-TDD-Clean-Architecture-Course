@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:number_trivia/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:number_trivia/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'package:number_trivia/features/number_trivia/presentation/widgets/loading_widget.dart';
+import 'package:number_trivia/features/number_trivia/presentation/widgets/message_display.dart';
+import 'package:number_trivia/features/number_trivia/presentation/widgets/trivia_controls.dart';
+import 'package:number_trivia/features/number_trivia/presentation/widgets/trivia_display.dart';
 
 import '../../../../injection_container.dart';
 
@@ -11,7 +16,7 @@ class NumberTriviaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Number Trivia'),
       ),
-      body: buildBody(context),
+      body: SingleChildScrollView(child: buildBody(context)),
     );
   }
 
@@ -25,34 +30,29 @@ class NumberTriviaPage extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 10),
               // Top half
-              Container(
-                // Third of the size of the screen
-                height: MediaQuery.of(context).size.height / 3,
-                // Message Text widgets / CircularLoadingIndicator
-                child: Placeholder(),
+              BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
+                builder: (context, state) {
+                  if (state is Empty) {
+                    return MessageDisplay(
+                      message: 'Start searching',
+                    );
+                  } else if (state is Loading) {
+                    return LoadingWidget();
+                  } else if (state is Loaded) {
+                    return TriviaDisplay(numberTrivia: state.trivia);
+                  } else if (state is Error) {
+                    return MessageDisplay(
+                      message: state.message,
+                    );
+                  } else {
+                    return Placeholder();
+                  }
+                },
               ),
+
               SizedBox(height: 20),
               // Bottom half
-              Column(
-                children: <Widget>[
-                  // TextField
-                  Placeholder(fallbackHeight: 40),
-                  SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        // Search concrete button
-                        child: Placeholder(fallbackHeight: 30),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        // Random button
-                        child: Placeholder(fallbackHeight: 30),
-                      )
-                    ],
-                  )
-                ],
-              )
+              TriviaControls()
             ],
           ),
         ),
@@ -60,3 +60,5 @@ class NumberTriviaPage extends StatelessWidget {
     );
   }
 }
+
+
