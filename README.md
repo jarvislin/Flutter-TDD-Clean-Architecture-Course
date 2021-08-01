@@ -3,7 +3,11 @@
 # number_trivia
 
 A Flutter application for learning online course from:
-https://resocoder.com/flutter-clean-architecture-tdd/
+* https://resocoder.com/flutter-clean-architecture-tdd/
+
+You can browse notes of this course on my website:
+* https://jarvislin.com/tag/flutter-tdd-clean-architecture-course/
+
 
 ## Getting Started
 
