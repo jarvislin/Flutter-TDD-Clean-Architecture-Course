@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:number_trivia/features/number_trivia/presentation/bloc/number_trivia_event.dart';
 import 'package:number_trivia/features/number_trivia/presentation/viewmodel/number_trivia_view_model.dart';
 import 'package:provider/provider.dart';
 
