@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:number_trivia/features/number_trivia/domain/entities/number_trivia.dart';
-import 'package:number_trivia/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'package:number_trivia/features/number_trivia/presentation/bloc/number_trivia_state.dart';
+import 'package:number_trivia/features/number_trivia/presentation/viewmodel/number_trivia_view_model.dart';
 import 'package:number_trivia/features/number_trivia/presentation/widgets/loading_widget.dart';
 import 'package:number_trivia/features/number_trivia/presentation/widgets/message_display.dart';
 import 'package:number_trivia/features/number_trivia/presentation/widgets/trivia_controls.dart';
 import 'package:number_trivia/features/number_trivia/presentation/widgets/trivia_display.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../injection_container.dart';
 
-class NumberTriviaPage extends StatelessWidget {
+class NumberTriviaPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _NumberTriviaState();
+  }
+}
+
+class _NumberTriviaState extends State<NumberTriviaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +26,8 @@ class NumberTriviaPage extends StatelessWidget {
     );
   }
 
-  BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
-    return BlocProvider(
-      create: (_) => inject<NumberTriviaBloc>(),
+  Widget buildBody(BuildContext context) {
+    return Container(
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -30,8 +35,9 @@ class NumberTriviaPage extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 10),
               // Top half
-              BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
-                builder: (context, state) {
+              Container(
+                child: ((() {
+                  NumberTriviaState state = Provider.of<NumberTriviaViewModel>(context).state;
                   if (state is Empty) {
                     return MessageDisplay(
                       message: 'Start searching',
@@ -47,7 +53,7 @@ class NumberTriviaPage extends StatelessWidget {
                   } else {
                     return Placeholder();
                   }
-                },
+                }())),
               ),
 
               SizedBox(height: 20),
@@ -60,5 +66,3 @@ class NumberTriviaPage extends StatelessWidget {
     );
   }
 }
-
-

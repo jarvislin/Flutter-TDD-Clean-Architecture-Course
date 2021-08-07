@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:number_trivia/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'package:number_trivia/features/number_trivia/presentation/bloc/number_trivia_event.dart';
+import 'package:number_trivia/features/number_trivia/presentation/viewmodel/number_trivia_view_model.dart';
+import 'package:provider/provider.dart';
 
 class TriviaControls extends StatefulWidget {
   const TriviaControls({
@@ -64,12 +65,11 @@ class _TriviaControlsState extends State<TriviaControls> {
 
   void dispatchConcrete() {
     controller.clear();
-    BlocProvider.of<NumberTriviaBloc>(context)
-        .add(GetTriviaForConcreteNumber(input));
+    Provider.of<NumberTriviaViewModel>(context, listen: false).getConcreteNumber(input);
   }
 
   void dispatchRandom() {
     controller.clear();
-    BlocProvider.of<NumberTriviaBloc>(context).add(GetTriviaForRandomNumber());
+    Provider.of<NumberTriviaViewModel>(context, listen: false).getRandomNumber();
   }
 }

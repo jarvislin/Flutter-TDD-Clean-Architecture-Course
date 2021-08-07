@@ -1,6 +1,7 @@
-part of 'number_trivia_bloc.dart';
+import 'package:meta/meta.dart';
+import 'package:equatable/equatable.dart';
+import 'package:number_trivia/features/number_trivia/domain/entities/number_trivia.dart';
 
-@immutable
 abstract class NumberTriviaState extends Equatable {
   @override
   List<Object> get props => [];
