@@ -26,13 +26,11 @@ class NumberTriviaViewModel extends ChangeNotifier {
   }
 
   getConcreteNumber(String input) async {
-    _state = Loading();
-    notifyListeners();
+    updateState(Loading());
 
     final either = inputConverter.stringToUnsignedInteger(input);
     either.fold((failure) {
-      _state = Error(message: INVALID_INPUT_FAILURE_MESSAGE);
-      notifyListeners();
+      updateState(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
     }, (integer) async {
       final result = await getConcreteNumberUseCase(Params(number: integer));
       _eitherLoadedOrErrorState(result);
@@ -40,23 +38,25 @@ class NumberTriviaViewModel extends ChangeNotifier {
   }
 
   getRandomNumber() async {
-    _state = Loading();
-    notifyListeners();
+    updateState(Loading());
 
     final result = await getRandomNumberUseCase(NoParams());
     _eitherLoadedOrErrorState(result);
+  }
+
+  void updateState(NumberTriviaState state) {
+    _state = state;
+    notifyListeners();
   }
 
   void _eitherLoadedOrErrorState(
       Either<Failure, NumberTrivia> failureOrTrivia) async {
     failureOrTrivia.fold(
       (failure) {
-        _state = Error(message: _mapFailureToMessage(failure));
-        notifyListeners();
+        updateState(Error(message: _mapFailureToMessage(failure)));
       },
       (trivia) {
-        _state = Loaded(trivia: trivia);
-        notifyListeners();
+        updateState(Loaded(trivia: trivia));
       },
     );
   }
